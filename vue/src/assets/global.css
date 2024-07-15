@@ -1,8 +1,0 @@
-body{
-    margin: 0;
-    padding: 0;
-}
-/*把所有元素变为盒状模型*/
-*{
-    box-sizing: border-box;
-}
