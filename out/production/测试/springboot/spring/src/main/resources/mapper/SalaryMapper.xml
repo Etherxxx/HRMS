@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring.dao.SalaryDao">
+
+    <select id="findBySearch" resultType="com.example.spring.entity.Salary">
+        select salary.* ,
+        user.name as userName,
+        dept.name as deptName
+        from salary
+        left join user on salary.userId=user.id
+        left join dept on salary.deptId=dept.id
+        <where>
+            <if test="params != null and params.name!=null and params.name!='' ">
+                and user.name like concat('%',#{params.name},'%')
+            </if>
+            <if test="params != null and params.month!=null and params.month!='' ">
+                and salary.date like concat('%',#{params.month},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

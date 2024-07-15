@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring.dao.SignDao">
+
+    <select id="findBySearch" resultType="com.example.spring.entity.Sign">
+        select sign.* ,user.name as userName,dept.name as deptName from sign
+        left join user on sign.userId=user.id
+        left join dept on sign.deptId=dept.id
+        <where>
+            <if test="params != null and params.name!=null and params.name!='' ">
+                and (SELECT user.name FROM user WHERE user.id = sign.userId) like concat('%',#{params.name},'%')
+            </if>
+            <if test="params != null and params.month!=null and params.month!='' ">
+                and sign.date like concat('%',#{params.month},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
